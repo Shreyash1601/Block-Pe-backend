@@ -20,5 +20,5 @@ app.get("/",(req,res)=>{
 })
 
 app.listen(process.env.PORT||5000,hostname,()=>{
-    console.log("Server running at port 3000")
+    console.log("Server running at port 5000")
 })

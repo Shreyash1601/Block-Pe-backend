@@ -5,18 +5,18 @@ require('../db/conn')
 const User=require('../models/userSchema')
 
 router.post('/register',(req,res)=>{
-    const {name,email,phone,MIStoreID,password,cpassword}=req.body;
+    const {name,email,phone,MIStoreID,password,cpassword,POS}=req.body;
 
-    if(!name || !email || !phone || !MIStoreID || !password || !cpassword){
+    if(!name || !email || !phone || !MIStoreID || !password || !cpassword ||!POS){
         res.status(422).json({
             "Error":"Please fill complete data"
         })
     }
 
-    User.findOne({email:email}).then((userExist)=>{
+    User.findOne({MIStoreID:MIStoreID}).then((userExist)=>{
         if(userExist){
             return res.status(422).json({
-                error:"Email exists"
+                error:"Account exists"
             })
         }
 
@@ -24,6 +24,7 @@ router.post('/register',(req,res)=>{
             name:name,
             email:email,
             phone:phone,
+            POS:POS,
             MIStoreID:MIStoreID,
             password:password,
             cpassword:cpassword
