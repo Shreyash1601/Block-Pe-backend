@@ -1,10 +1,18 @@
 const mongoose=require('mongoose');
 
-const Transaction=new mongoose.Schema({
+const Product=new mongoose.Schema({
     StoreName:{
         type:String,
         required:true
     },
+    PManufacture:{
+        type:String,
+        required:true
+    },
+    ShippedBy:{
+        type:String,
+        required:true
+    }
     Invoice:{
         type:String,
         required:true
@@ -19,6 +27,14 @@ const Transaction=new mongoose.Schema({
     },
     ProductPrice:{
         type:Number,
+        required:true
+    },
+    LTS:{
+        type:String,
+        required:true
+    },
+    DOM:{
+        type:String,
         required:true
     },
     DOP:{
@@ -48,5 +64,5 @@ const Transaction=new mongoose.Schema({
 })
 
 
-const Purchase=mongoose.model('Purchase',Transaction);
-module.exports=Purchase;
+const Pro=mongoose.model('Product',Product);
+module.exports=Pro;

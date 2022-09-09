@@ -3,9 +3,6 @@ const express=require('express');
 const router=express.Router();
 require('../db/conn')
 const User=require('../models/userSchema')
-router.get('/',(req,res)=>{
-    res.send("Hello auth.js")
-})
 
 router.post('/register',(req,res)=>{
     const {name,email,phone,MIStoreID,password,cpassword}=req.body;
@@ -48,6 +45,7 @@ router.post('/register',(req,res)=>{
 
 
 router.post('/Login',async (req,res)=>{
+    res.setHeader('Access-Control-Allow-Origin', '*');
     try{
         const {email,password}=req.body;
         if(!email || !password){

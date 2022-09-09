@@ -4,7 +4,7 @@ const hostname='0.0.0.0';
 require("./db/conn")
 app.use(express.json());
 app.use(require('./Router/auth'));
-
+app.use(require('./Router/purchase'))
 app.get("/",(req,res)=>{
     res.send("Welcome to block Pe")
 })
