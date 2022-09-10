@@ -1,8 +1,11 @@
 const express=require('express');
+const cors=require("cors");
 const pur=express.Router();
 require('../db/conn')
 const Purchase=require('../models/Transaction detail.js')
-
+pur.use(cors({
+    origin: '*'
+}));
 pur.post('/purchase',(req,res)=>{
     const {StoreName,Invoice,PCategory,ProductName,ProductPrice,DOP, CustomerName,AadharCard, email,phone,MIStoreID}=req.body;
 
