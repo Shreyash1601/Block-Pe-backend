@@ -1,5 +1,4 @@
 const express=require('express');
-const axios=require('axios');
 const pur=express.Router();
 require('../db/conn')
 const Purchase=require('../models/Transaction detail.js')
@@ -13,29 +12,9 @@ pur.post('/purchase',(req,res)=>{
         })
     }
 
-    const fn=()=>{
-        axios.post('https://block-pe-ipfs.herokuapp.com/ipfs',{
-        StoreName:StoreName,
-        Invoice:Invoice,
-        PCategory:PCategory,
-        ProductName:ProductName,
-        ProductPrice:ProductPrice,
-        DOP:DOP,
-        CustomerName:CustomerName,
-        AadharCard:AadharCard,
-        email:email,
-        phone:phone,
-        MIStoreID:MIStoreID
-        }).then((response)=>{return(response.data["CID"])}).catch((err)=>{
-            console.log(err)
-            return null;
-        })
-    }
-
     const bill=new Purchase({
         StoreName:StoreName,
         Invoice:Invoice,
-        Hash:fn(),
         PCategory:PCategory,
         ProductName:ProductName,
         ProductPrice:ProductPrice,
@@ -47,11 +26,8 @@ pur.post('/purchase',(req,res)=>{
         MIStoreID:MIStoreID
     })
 
-    console.log(bill.Hash)
-    if(bill.Hash==null) return res.status(422).json({"error":"An error occurred while storing data on IPFS"}
-    )
     bill.save().then(()=>{
-        res.status(201).json({
+        res.status(200).json({
             message:"Bill made successfully"
     })
 }).catch((err)=>{
