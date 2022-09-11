@@ -40,4 +40,37 @@ pur.post('/purchase',(req,res)=>{
 
 })
 
+pur.post("/records/all",async (req,res)=>{
+    try{
+   const result=await Purchase.find().sort({$natural:-1});
+   if(!result) res.status(422).json({error:"Could not load"})
+   else{
+       res.send(result)
+   }
+    }catch(err){
+        res.status(422).json({error:"Could not load"})
+    }
+})
+
+pur.post("/records",async (req,res)=>{
+   const {phone,DOP,Invoice}=req.body;
+   let data={};
+   try{
+   if(DOP && !phone && !Invoice){
+       data=await Purchase.find({DOP:DOP});
+   }
+   else if(!DOP && phone && !Invoice){
+    data=await Purchase.find({phone:phone});
+   }
+    else if(!DOP && !phone && Invoice){
+    data=await Purchase.find({Invoice:Invoice})}
+    else{
+        return res.status(400).json({error:"Incomplete data"});
+      }
+    res.send(data) 
+   }catch{
+       res.status(400).json("Some error occured at Server End");
+   }
+})
+
 module.exports=pur
