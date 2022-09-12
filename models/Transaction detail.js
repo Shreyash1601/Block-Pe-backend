@@ -5,6 +5,10 @@ const Transaction=new mongoose.Schema({
         type:String,
         required:true
     },
+    Hash:{
+        type:String,
+        required:true
+    }
     Invoice:{
         type:String,
         required:true

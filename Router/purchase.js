@@ -7,15 +7,16 @@ pur.use(cors({
     origin: '*'
 }));
 pur.post('/purchase',(req,res)=>{
-    const {StoreName,Invoice,PCategory,ProductName,ProductPrice,DOP, CustomerName,AadharCard, email,phone,MIStoreID}=req.body;
+    const {StoreName,Invoice,PCategory,ProductName,ProductPrice,DOP, CustomerName,AadharCard, email,phone,MIStoreID,Hash}=req.body;
 
-    if(!StoreName || !Invoice || !ProductName || !ProductPrice || !DOP || !CustomerName || !PCategory||!AadharCard|| !email ||!phone||!MIStoreID){
+    if(!StoreName || !Invoice || !ProductName || !ProductPrice || !DOP || !CustomerName || !PCategory||!AadharCard|| !email ||!phone||!MIStoreID ||!Hash){
         res.status(422).json({
             "Error":"Please fill complete data"
         })
     }
 
     const bill=new Purchase({
+        Hash:Hash,
         StoreName:StoreName,
         Invoice:Invoice,
         PCategory:PCategory,
