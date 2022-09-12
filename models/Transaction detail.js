@@ -7,7 +7,7 @@ const Transaction=new mongoose.Schema({
     },
     Hash:{
         type:String,
-        required:true
+        required:false
     },
     Invoice:{
         type:String,
