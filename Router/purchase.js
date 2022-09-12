@@ -6,15 +6,15 @@ const Purchase=require('../models/Transaction detail.js')
 pur.use(cors({
     origin: '*'
 }));
-pur.post('/purchase',(req,res)=>{
+pur.post('/purchase',async (req,res)=>{
     const {StoreName,Invoice,PCategory,ProductName,ProductPrice,DOP, CustomerName,AadharCard, email,phone,MIStoreID,Hash}=req.body;
 
-    if(!StoreName || !Invoice || !ProductName || !ProductPrice || !DOP || !CustomerName || !PCategory||!AadharCard|| !email ||!phone||!MIStoreID ||!Hash){
-        res.status(422).json({
+    if(!StoreName || !Invoice || !ProductName || !ProductPrice || !DOP || !CustomerName || !PCategory||!AadharCard|| !email ||!phone||!MIStoreID||!Hash){
+       return res.status(422).json({
             "Error":"Please fill complete data"
         })
     }
-
+    else{
     const bill=new Purchase({
         Hash:Hash,
         StoreName:StoreName,
@@ -29,7 +29,6 @@ pur.post('/purchase',(req,res)=>{
         phone:phone,
         MIStoreID:MIStoreID
     })
-
     bill.save().then(()=>{
         res.status(200).json({
             message:"Bill made successfully"
@@ -38,7 +37,7 @@ pur.post('/purchase',(req,res)=>{
     console.log(err)
     res.status(500).json({error:"Can't complete the bill"})
 })
-
+    }
 })
 
 pur.post("/records/all",async (req,res)=>{
