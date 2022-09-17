@@ -1,9 +1,11 @@
 const express=require('express');
-
+const cors=require("cors");
 const router=express.Router();
 require('../db/conn')
 const User=require('../models/userSchema')
-
+router.use(cors({
+    origin: '*'
+}));
 router.post('/register',(req,res)=>{
     const {name,email,phone,MIStoreID,password,cpassword,POS}=req.body;
 
@@ -53,12 +55,12 @@ router.post('/Login',async (req,res)=>{
 
 
     try{
-        const {email,password}=req.body;
+        const {MIStoreID,password}=req.body;
         if(!email || !password){
             return res.status(400).json({error:"Please fill the data"})
         }
 
-        const UserLogin=await User.findOne({email:email});
+        const UserLogin=await User.findOne({MIStoreID:MIStoreID});
 
 
         const isCompare=UserLogin.password==password;

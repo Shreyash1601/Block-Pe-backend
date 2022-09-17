@@ -21,7 +21,7 @@ var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: 'blockpeofficialbill@gmail.com',
-      pass: 'dkcqtuicrmaiiznc'
+      pass: 'dkcqtuicrmaiiznc' //the password is made to be used only for this particular application and not for other Gmail services. Hence it is safe.
     }
   });
 
@@ -38,6 +38,7 @@ pur.post('/purchase',async (req,res)=>{
         })
     }
     else{
+      //recognising details
     const bill2={
         Hash:Hash,
         StoreName:StoreName,
@@ -55,23 +56,24 @@ pur.post('/purchase',async (req,res)=>{
     const bill=new Purchase({
        ...bill2
     })
+    const bill3= `Your Bill for ${bill2.ProductName}\nCustomerName\t${bill2.CustomerName}\n
+    Invoice\t${bill2.Invoice}\n
+    Hash\t${bill2.Hash}\n
+    StoreName\t${bill2.StoreName}\n
+    MI Store ID\t${bill2.MIStoreID}\n
+    Date of Purchase\t${bill2.DOP}\n
+    Price\t${bill2.ProductPrice}\n
+      `
     bill.save().then(()=>{
         res.status(200).json({
             message:"Bill made successfully"
     })
     var mailOptions = {
-        from: 'shreyashkumarshrivastava7999@gmail.com',
+        from: 'blockpeofficialbill@gmail.com',
         to: `${bill2.email}`,
         subject: `Your Bill from Block Pe for ${bill2.ProductName}`,
-        text: `CustomerName\t${bill2.CustomerName}\n
-        Invoice\t${bill2.Invoice}\n
-        Hash\t${bill2.Hash}\n
-        StoreName\t${bill2.StoreName}\n
-        MI Store ID\t${bill2.MIStoreID}\n
-        Date of Purchase\t${bill2.DOP}\n
-        Price\t${bill2.ProductPrice}\n
-          
-        `
+        text:`${bill3}`
+        
       };
       
       transporter.sendMail(mailOptions, function(error, info){
@@ -86,15 +88,7 @@ pur.post('/purchase',async (req,res)=>{
  .create({
   
   // Bill to be sent..
-  body: `Your Bill for ${bill2.ProductName}\nCustomerName\t${bill2.CustomerName}\n
-  Invoice\t${bill2.Invoice}\n
-  Hash\t${bill2.Hash}\n
-  StoreName\t${bill2.StoreName}\n
-  MI Store ID\t${bill2.MIStoreID}\n
-  Date of Purchase\t${bill2.DOP}\n
-  Price\t${bill2.ProductPrice}\n
-    
-  `,
+  body: `${bill3}`,
 
   // Senders Number (Twilio Sandbox No.)
   from: 'whatsapp:+14155238886',
