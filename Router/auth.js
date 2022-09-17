@@ -59,7 +59,7 @@ router.post('/Login',async (req,res)=>{
         const UserLogin=await User.findOne({MIStoreID:MIStoreID});
 
 
-        const isCompare=UserLogin.password==password;
+        const isCompare=UserLogin.password===password;
 
 
         if(!UserLogin|| !isCompare){
