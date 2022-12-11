@@ -14,6 +14,8 @@ app.get("/",(req,res)=>{
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
     res.setHeader('Access-Control-Allow-Credentials', true); // If needed
+    res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
 
 
     res.send("Welcome to block Pe")
